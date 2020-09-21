@@ -1,39 +1,39 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <p>{{count}}</p>
+    <p>{{state.count}}</p>
     <p>{{state.str}}</p>
+    <p>{{state.double}}</p>
     <button @click="add">加一</button>
     <button @click="prep">减一</button>
   </div>
 </template>
 
 <script>
-import { reactive, ref, getCurrentInstance } from 'vue'
+import { reactive, computed, watch, getCurrentInstance } from 'vue'
 export default {
   setup () {
-    const _this = getCurrentInstance()
-    console.log(_this)
+    const { ctx } = getCurrentInstance()
+    const store = ctx.$store
+    console.log(store.state)
     const state = reactive({
-      count: 0,
-      str: 'hello'
+      count: 100,
+      str: 'hello',
+      double: computed(() => state.count * 2)
     })
-    const count = ref(0)
+    watch(() => state.count, val => {
+      console.log(`count is ${val}`)
+    })
     const add = () => {
-      count.value++
+      state.count++
     }
     const prep = () => {
-      if (count.value === 0) return
-      count.value--
+      if (state.count === 0) return
+      state.count--
     }
-    const init = () => {
-      console.log('加载执行')
-    }
-    init()
     return {
       state,
       add,
-      count,
       prep
     }
   }
