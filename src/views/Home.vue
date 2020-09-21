@@ -27,8 +27,6 @@ export default {
     const init = () => {
       console.log('加载执行')
     }
-    const _this = getCurrentInstance()
-    console.log(_this.ctx.$router.currentRoute.value.query.id)
     init()
     return {
       state,
