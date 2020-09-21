@@ -12,6 +12,8 @@
 import { reactive, ref, getCurrentInstance } from 'vue'
 export default {
   setup () {
+    const _this = getCurrentInstance()
+    console.log(_this)
     const state = reactive({
       count: 0,
       str: 'hello'
