@@ -1,18 +1,41 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p>{{count}}</p>
+    <p>{{state.str}}</p>
+    <button @click="add">加一</button>
+    <button @click="prep">减一</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import { reactive, ref, getCurrentInstance } from 'vue'
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  setup () {
+    const state = reactive({
+      count: 0,
+      str: 'hello'
+    })
+    const count = ref(0)
+    const add = () => {
+      count.value++
+    }
+    const prep = () => {
+      if (count.value === 0) return
+      count.value--
+    }
+    const init = () => {
+      console.log('加载执行')
+    }
+    const _this = getCurrentInstance()
+    console.log(_this.ctx.$router.currentRoute.value.query.id)
+    init()
+    return {
+      state,
+      add,
+      count,
+      prep
+    }
   }
 }
 </script>
